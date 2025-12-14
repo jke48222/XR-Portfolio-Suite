@@ -27,8 +27,9 @@ namespace ElementalBendingSandbox.Elements.Common
 
         private void Reset()
         {
-            _coordinator = FindObjectOfType<ElementLoopCoordinator>();
-            _handSampler = FindObjectOfType<HandKinematicsSampler>();
+            // Use non-allocating lookups to stay compatible with Unity 6 deprecations
+            _coordinator = FindFirstObjectByType<ElementLoopCoordinator>();
+            _handSampler = FindFirstObjectByType<HandKinematicsSampler>();
         }
 
         private void Update()

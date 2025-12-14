@@ -26,7 +26,7 @@ namespace ElementalBendingSandbox.Gestures
 
         public GestureIntentData CurrentIntent => _currentIntent;
 
-        private GestureIntentData _currentIntent = new GestureIntentData(Vector3.forward, 0f, 0f, 0f);
+        private GestureIntentData _currentIntent = new GestureIntentData(Vector3.forward, 0f, 0f, 0f, Vector3.zero, 0f);
 
         private void Reset()
         {
@@ -47,6 +47,7 @@ namespace ElementalBendingSandbox.Gestures
             var averageDirection = ComputeAverageDirection(left.SmoothedVelocity, right.SmoothedVelocity);
             var combinedSpeed = left.SmoothedVelocity.magnitude + right.SmoothedVelocity.magnitude;
             var handSeparation = Vector3.Distance(left.Position, right.Position);
+            var averageHandPosition = (left.Position + right.Position) * 0.5f;
 
             var stability = ComputeStability(coherence, handSeparation);
             var rawIntent = Mathf.InverseLerp(_minActivationSpeed, _fullIntentSpeed, combinedSpeed);
@@ -57,7 +58,9 @@ namespace ElementalBendingSandbox.Gestures
                 averageDirection,
                 intensity,
                 stability,
-                confidence
+                confidence,
+                averageHandPosition,
+                handSeparation
             );
         }
 
