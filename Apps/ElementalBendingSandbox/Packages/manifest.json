@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "com.jalen.xrshared": "file:../../Packages/com.jalen.xrshared"
+  }
+}
