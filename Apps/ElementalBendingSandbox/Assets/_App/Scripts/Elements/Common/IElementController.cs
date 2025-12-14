@@ -5,7 +5,6 @@ namespace ElementalBendingSandbox.Elements.Common
     public interface IElementController
     {
         ElementState CurrentState { get; }
-        ElementOutputState Output { get; }
         void ProcessIntent(in GestureIntentData intent, float deltaTime);
     }
 

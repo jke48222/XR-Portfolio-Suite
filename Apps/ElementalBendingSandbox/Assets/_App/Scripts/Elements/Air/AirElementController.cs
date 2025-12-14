@@ -29,13 +29,10 @@ namespace ElementalBendingSandbox.Elements.Air
         [SerializeField, Tooltip("Higher = more jitter in input; useful for VFX hooks.")]
         private float _instability;
 
-        private ElementOutputState _output;
-
         public ElementState CurrentState => _currentState;
         public float CurrentIntensity01 => _currentIntensity;
         public Vector3 CurrentDirection => _currentDirection;
         public float Instability01 => _instability;
-        public ElementOutputState Output => _output;
 
         public event Action<float, Vector3, float> OnAirIntentChanged; // intensity, direction, instability
 
@@ -51,7 +48,6 @@ namespace ElementalBendingSandbox.Elements.Air
             _instability = 1f - Mathf.Clamp01(intent.Stability01 * intent.Confidence01);
 
             UpdateState(intent);
-            _output = new ElementOutputState(_currentState, _currentDirection, _currentIntensity, intent.Stability01, intent.Confidence01, _instability);
             OnAirIntentChanged?.Invoke(_currentIntensity, _currentDirection, _instability);
         }
 
