@@ -1,17 +1,1 @@
-{
-  "name": "com.jalen.xrshared",
-  "version": "0.1.0",
-  "displayName": "Jalen XR Shared Core",
-  "description": "Shared core architecture, diagnostics, persistence, capture pipeline scaffolding, and common interfaces for XR Portfolio Suite.",
-  "unity": "6000.3",
-  "author": {
-    "name": "Jalen Edusei"
-  },
-  "samples": [
-    {
-      "displayName": "Shared Rig Sample",
-      "description": "Minimal sample showing AppBootstrap, TickRunner, and DebugOverlay working together.",
-      "path": "Samples~/SharedRigSample"
-    }
-  ]
-}
+
