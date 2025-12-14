@@ -24,7 +24,7 @@ namespace XrShared.Core.Tick
             _fixedTickables.Clear();
             _lateTickables.Clear();
 
-            MonoBehaviour[] behaviours = FindObjectsOfType<MonoBehaviour>(true);
+            MonoBehaviour[] behaviours = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (MonoBehaviour b in behaviours)
             {
                 if (b is ITickable t) _tickables.Add(t);
