@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  repo_hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f docs/engineering-principles.md
+          test -f Packages/com.jalen.xrshared/package.json
+
+      - name: Ensure no forbidden folders committed
+        run: |
+          if git ls-files | grep -E "(^|/)(Library|Temp|Obj|Build|Builds|Logs|UserSettings)/" ; then
+            echo "Forbidden Unity generated folders detected in git tracked files."
+            exit 1
+          fi
+
+      - name: Check line endings and whitespace
+        run: |
+          python - << 'PY'
+          import subprocess, sys
+          files = subprocess.check_output(["git","ls-files"]).decode().splitlines()
+          bad = []
+          for f in files:
+            if f.endswith((".png",".jpg",".jpeg",".fbx",".wav",".mp3",".ogg",".ttf",".otf",".zip",".pdf")):
+              continue
+            data = open(f, "rb").read()
+            if b"\r\n" in data:
+              bad.append(f)
+          if bad:
+            print("CRLF line endings found in:")
+            for f in bad:
+              print(" -", f)
+            sys.exit(1)
+          PY
+
+      - name: Basic C# file scan (no tabs)
+        run: |
+          if git ls-files '*.cs' | xargs -I {} bash -c "grep -nP '\t' '{}' && exit 1 || exit 0"; then
+            echo "OK"
+          else
+            echo "Tab character found in C# source."
+            exit 1
+          fi
