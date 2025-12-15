@@ -1,5 +1,5 @@
 ﻿<Solution>
   <Project Path="XrShared.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="XrShared.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
 </Solution>
